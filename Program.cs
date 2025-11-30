@@ -5,15 +5,18 @@
     Esto te obliga a pensar en estructura de datos, persistencia simple y lógica.
  */
 
+using System.Security.Cryptography.X509Certificates;
+
 class CRUD
 {
-
     public static void Main(string[] args)
     {
-        Console.WriteLine("Hola");
+        // Instanciamos las clases de la app
+         Menu menu = new Menu();
+
+        // Llamamos a los métodos de la app
+         menu.MostrarMenu();
+
     }
-
-
-
-
 }
+
