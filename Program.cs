@@ -17,7 +17,7 @@ class CRUD
         // Llamamos a los métodos de la app
         int opcion = 0;
 
-        while (opcion != 6)
+        while (opcion != 5)
         {
             opcion = menu.MostrarMenu();
         }

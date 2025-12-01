@@ -12,8 +12,7 @@ class Menu
         Console.WriteLine("2. Listar gastos");
         Console.WriteLine("3. Modificar gastos");
         Console.WriteLine("4. Eliminar gastos");
-        Console.WriteLine("5. Guardar cambios");
-        Console.WriteLine("6. Salir");
+        Console.WriteLine("5. Salir");
         Console.WriteLine(" ");
         Console.WriteLine("ELIGE UNA OPCIÓN");
         opcion = int.Parse(Console.ReadLine());
@@ -23,6 +22,10 @@ class Menu
             case 1:
                 Agregar agregar = new Agregar();
                 agregar.agregarGasto();
+                break;
+            case 2:
+                Mostrar mostrar = new Mostrar();
+                mostrar.mostrarGastos();
                 break;
         }
 
@@ -88,3 +91,35 @@ class Agregar : Gastos
     }
 }
    
+// 2. Listar gastos
+class Mostrar : Gastos
+{
+    public void mostrarGastos()
+    {
+        string rutaData = "C:\\Users\\Marcos\\source\\repos\\CRUD\\data";
+        string archivo = Path.Combine(rutaData, "gastos.json");
+
+        List<Gastos> gastos = new List<Gastos>();
+
+        if (File.Exists(archivo))
+        {
+            string json = File.ReadAllText(archivo);
+            gastos = JsonSerializer.Deserialize<List<Gastos>>(json) ?? new List<Gastos>();
+
+            foreach (Gastos g in gastos)
+            {
+                Console.WriteLine(g.descripcion);
+                Console.WriteLine(g.categoria);
+                Console.WriteLine(g.monto);
+                Console.WriteLine(g.vencimiento);
+                Console.WriteLine(" ");
+            }
+        }
+        else
+        {
+            Console.WriteLine("Aún no hay gastos previstos.");
+        }
+        
+
+    }
+}
