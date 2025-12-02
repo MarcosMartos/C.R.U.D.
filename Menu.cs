@@ -36,15 +36,17 @@ class Menu
 // Creamos una clase Gastos con sus atributos
 class Gastos
 {
+    public int id { get; set; }
     public string descripcion { get; set; }
     public string categoria { get; set; }
     public int monto { get; set; }
     public DateTime vencimiento { get; set; }
+    public bool estado { get; set; }
 
 }
 
 // 1. Agregar gastos
-class Agregar : Gastos
+class Agregar
 {
 
     public string rutaData = "C:\\Users\\Marcos\\source\\repos\\CRUD\\data";
@@ -72,6 +74,15 @@ class Agregar : Gastos
         // Crear el objeto de gasto
         Gastos gasto = new Gastos();
 
+
+        // Generar ID incremental
+        int nuevoId = 1;
+        if (gastos.Count > 0)
+        {
+            nuevoId = gastos.Max(gasto => gasto.id) + 1;
+        }
+
+        gasto.id = nuevoId;
         Console.WriteLine("Descripcion: ");
         gasto.descripcion = Console.ReadLine();
         Console.WriteLine("Categoria: ");
@@ -80,11 +91,13 @@ class Agregar : Gastos
         gasto.monto = int.Parse(Console.ReadLine());
         Console.WriteLine("Vencimiento (dd/mm/yyyy): ");
         gasto.vencimiento = DateTime.Parse(Console.ReadLine());
+        gasto.estado = false;
+        Console.WriteLine(gasto.estado);
 
         gastos.Add(gasto);
 
         // Guardar lista actualizada
-        string archivoJson = JsonSerializer.Serialize(gastos);
+        string archivoJson = JsonSerializer.Serialize(gastos, new JsonSerializerOptions { WriteIndented = true });
         File.WriteAllText(archivo, archivoJson);
 
         Console.WriteLine("Gasto agregado con éxito\n");
@@ -92,7 +105,7 @@ class Agregar : Gastos
 }
    
 // 2. Listar gastos
-class Mostrar : Gastos
+class Mostrar 
 {
     public void mostrarGastos()
     {
@@ -103,15 +116,22 @@ class Mostrar : Gastos
 
         if (File.Exists(archivo))
         {
+            var opciones = new JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true
+            };
             string json = File.ReadAllText(archivo);
-            gastos = JsonSerializer.Deserialize<List<Gastos>>(json) ?? new List<Gastos>();
+            gastos = JsonSerializer.Deserialize<List<Gastos>>(json, opciones) ?? new List<Gastos>();
 
             foreach (Gastos g in gastos)
             {
+                Console.WriteLine(g.id);
                 Console.WriteLine(g.descripcion);
                 Console.WriteLine(g.categoria);
                 Console.WriteLine(g.monto);
                 Console.WriteLine(g.vencimiento);
+                string estadoTexto = g.estado ? "Pagado" : "Pendiente";
+                Console.WriteLine(estadoTexto);
                 Console.WriteLine(" ");
             }
         }
@@ -123,3 +143,14 @@ class Mostrar : Gastos
 
     }
 }
+
+
+
+// 4. Eliminar gastos
+//class Eliminar
+//{
+//    public void eliminarGastos(List<Gastos> gastos))
+//    {
+
+//    }
+//}
