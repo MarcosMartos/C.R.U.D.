@@ -11,8 +11,4 @@
     <None Remove="data\data.txt" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="data\" />
-  </ItemGroup>
-
 </Project>
