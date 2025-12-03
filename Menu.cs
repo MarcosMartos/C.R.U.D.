@@ -27,7 +27,11 @@ class Menu
                 Mostrar mostrar = new Mostrar();
                 mostrar.mostrarGastos();
                 break;
-            case 3: 
+            case 3:
+                Modificar modificar = new Modificar();
+                modificar.elegirPropiedad();
+                break;
+            case 4: 
                 Eliminar eliminar = new Eliminar();
                 eliminar.eliminarGastos();
                 break;
