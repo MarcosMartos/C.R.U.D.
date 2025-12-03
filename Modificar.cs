@@ -1,6 +1,8 @@
 ﻿
 // 3. Modificar gastos
 
+using System.Text.Json;
+
 class Modificar
 {
     // Inicializamos la variable de la eleccion
@@ -37,9 +39,56 @@ class Modificar
         }
     }
 
+    // Funcion para modificar la descripción
     public void modificarDescripcion()
     {
-        Console.WriteLine("Descripcion");
+        // Buscamos el archivo en la ruta
+        string rutaData = "C:\\Users\\Marcos\\source\\repos\\CRUD\\data";
+        string archivo = Path.Combine(rutaData, "gastos.json");
+
+        List<Gastos> gastos = new List<Gastos>();
+
+        // Verificamos que existe o lo creamos
+        if (File.Exists(archivo))
+        {
+            var opciones = new JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true
+            };
+            string json = File.ReadAllText(archivo);
+            gastos = JsonSerializer.Deserialize<List<Gastos>>(json, opciones) ?? new List<Gastos>();
+
+            Console.WriteLine("Ingrese ID del elemento a modificar: ");
+            int idElemento = int.Parse(Console.ReadLine());
+
+            var gastoEncontrado = gastos.FirstOrDefault(g => g.id == idElemento);
+
+            if (gastoEncontrado != null)
+            {
+                try
+                {
+                    Console.WriteLine("Escriba la nueva descripción.");
+                    gastoEncontrado.descripcion = Console.ReadLine();
+
+                    Console.WriteLine("Descripción modificada correctamente.");
+                }
+                catch
+                {
+                    Console.WriteLine("Error al cambiar la descripción.");
+                }
+               
+                string archivoJson = JsonSerializer.Serialize(gastos, new JsonSerializerOptions { WriteIndented = true });
+                File.WriteAllText(archivo, archivoJson);
+            }
+            else
+            {
+                Console.WriteLine("No se encontró ese ID.");
+            }
+        }
+        else
+        {
+            Console.WriteLine("No se encuentra un archivo de gastos.");
+        }
     }
 
     public void modificarCategoria()

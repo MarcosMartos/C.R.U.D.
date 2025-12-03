@@ -9,7 +9,7 @@
   },
   {
     "id": 2,
-    "descripcion": "internet",
+    "descripcion": "wifi",
     "categoria": "ctnet",
     "monto": 15000,
     "vencimiento": "2025-12-30T00:00:00",
