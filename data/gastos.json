@@ -22,5 +22,13 @@
     "monto": 50000,
     "vencimiento": "2026-01-05T00:00:00",
     "estado": false
+  },
+  {
+    "id": 4,
+    "descripcion": "gym",
+    "categoria": "ejercicio",
+    "monto": 15000,
+    "vencimiento": "2025-12-01T00:00:00",
+    "estado": false
   }
 ]
