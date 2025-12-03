@@ -7,6 +7,7 @@ class Modificar
 {
     // Inicializamos la variable de la eleccion
     public int propiedad {  get; set; }
+    private GastosRepository repo = new GastosRepository();
 
     // Menu donde seleccionamos que propiedad cambiar
     public void elegirPropiedad()
@@ -22,281 +23,141 @@ class Modificar
         switch (propiedad)
         {
             case 1:
-                modificarDescripcion();
+                ModificarDescripcion();
                 break;
             case 2:
-                modificarCategoria();
+                ModificarCategoria();
                 break;
             case 3:
-                modificarMonto();
+                ModificarMonto();
                 break;
             case 4:
-                modificarVencimiento();
+                ModificarVencimiento();
                 break;
             case 5:
-                modificarEstado();
+                ModificarEstado();
                 break;
         }
     }
 
     // Funcion para modificar la descripción
-    public void modificarDescripcion()
+    public void ModificarDescripcion()
     {
-        // Buscamos el archivo en la ruta
-        string rutaData = "C:\\Users\\Marcos\\source\\repos\\CRUD\\data";
-        string archivo = Path.Combine(rutaData, "gastos.json");
+        var gastos = repo.CargarGastos();
 
-        List<Gastos> gastos = new List<Gastos>();
+        Console.WriteLine("Ingrese ID del elemento a modificar: ");
+        int idElemento = int.Parse(Console.ReadLine());
 
-        // Verificamos que existe o lo creamos
-        if (File.Exists(archivo))
+        var gasto = gastos.FirstOrDefault(g => g.id == idElemento);
+
+        if (gasto == null)
         {
-            var opciones = new JsonSerializerOptions
-            {
-                PropertyNameCaseInsensitive = true
-            };
-            string json = File.ReadAllText(archivo);
-            gastos = JsonSerializer.Deserialize<List<Gastos>>(json, opciones) ?? new List<Gastos>();
-
-            Console.WriteLine("Ingrese ID del elemento a modificar: ");
-            int idElemento = int.Parse(Console.ReadLine());
-
-            var gastoEncontrado = gastos.FirstOrDefault(g => g.id == idElemento);
-
-            if (gastoEncontrado != null)
-            {
-                try
-                {
-                    Console.WriteLine("Escriba la nueva descripción.");
-                    gastoEncontrado.descripcion = Console.ReadLine();
-
-                    Console.WriteLine("Descripción modificada correctamente.");
-                }
-                catch
-                {
-                    Console.WriteLine("Error al cambiar la descripción.");
-                }
-               
-                string archivoJson = JsonSerializer.Serialize(gastos, new JsonSerializerOptions { WriteIndented = true });
-                File.WriteAllText(archivo, archivoJson);
-            }
-            else
-            {
-                Console.WriteLine("No se encontró ese ID.");
-            }
+            Console.WriteLine("No se encontró ese ID.");
+            return;
         }
-        else
-        {
-            Console.WriteLine("No se encuentra un archivo de gastos.");
-        }
+
+        Console.WriteLine("Escriba la nueva descripción:");
+        gasto.descripcion = Console.ReadLine();
+
+        repo.GuardarGastos(gastos);
+        Console.WriteLine("Descripción modificada correctamente.");
     }
 
-
     // Funcion para modificar la categoria
-    public void modificarCategoria()
+    public void ModificarCategoria()
     {
-        // Buscamos el archivo en la ruta
-        string rutaData = "C:\\Users\\Marcos\\source\\repos\\CRUD\\data";
-        string archivo = Path.Combine(rutaData, "gastos.json");
+        var gastos = repo.CargarGastos();
 
-        List<Gastos> gastos = new List<Gastos>();
+        Console.WriteLine("Ingrese ID del elemento a modificar: ");
+        int idElemento = int.Parse(Console.ReadLine());
 
-        // Verificamos que existe o lo creamos
-        if (File.Exists(archivo))
+        var gasto = gastos.FirstOrDefault(g => g.id == idElemento);
+
+        if (gasto == null)
         {
-            var opciones = new JsonSerializerOptions
-            {
-                PropertyNameCaseInsensitive = true
-            };
-            string json = File.ReadAllText(archivo);
-            gastos = JsonSerializer.Deserialize<List<Gastos>>(json, opciones) ?? new List<Gastos>();
-
-            Console.WriteLine("Ingrese ID del elemento a modificar: ");
-            int idElemento = int.Parse(Console.ReadLine());
-
-            var gastoEncontrado = gastos.FirstOrDefault(g => g.id == idElemento);
-
-            if (gastoEncontrado != null)
-            {
-                try
-                {
-                    Console.WriteLine("Escriba la nueva categoría.");
-                    gastoEncontrado.categoria = Console.ReadLine();
-
-                    Console.WriteLine("Categoría modificada correctamente.");
-                }
-                catch
-                {
-                    Console.WriteLine("Error al cambiar la categoría.");
-                }
-
-                string archivoJson = JsonSerializer.Serialize(gastos, new JsonSerializerOptions { WriteIndented = true });
-                File.WriteAllText(archivo, archivoJson);
-            }
-            else
-            {
-                Console.WriteLine("No se encontró ese ID.");
-            }
-        }
-        else
-        {
-            Console.WriteLine("No se encuentra un archivo de gastos.");
+            Console.WriteLine("No se encontró ese ID.");
+            return;
         }
 
+        Console.WriteLine("Escriba la nueva categoría:");
+        gasto.categoria = Console.ReadLine();
+
+        repo.GuardarGastos(gastos);
+        Console.WriteLine("Categoría modificada correctamente.");
     }
 
 
     // Funcion para modificar el monto
-    public void modificarMonto()
+    public void ModificarMonto()
     {
-        // Buscamos el archivo en la ruta
-        string rutaData = "C:\\Users\\Marcos\\source\\repos\\CRUD\\data";
-        string archivo = Path.Combine(rutaData, "gastos.json");
+        var gastos = repo.CargarGastos();
 
-        List<Gastos> gastos = new List<Gastos>();
+        Console.WriteLine("Ingrese ID del elemento a modificar: ");
+        int idElemento = int.Parse(Console.ReadLine());
 
-        // Verificamos que existe o lo creamos
-        if (File.Exists(archivo))
+        var gasto = gastos.FirstOrDefault(g => g.id == idElemento);
+
+        if (gasto == null)
         {
-            var opciones = new JsonSerializerOptions
-            {
-                PropertyNameCaseInsensitive = true
-            };
-            string json = File.ReadAllText(archivo);
-            gastos = JsonSerializer.Deserialize<List<Gastos>>(json, opciones) ?? new List<Gastos>();
-
-            Console.WriteLine("Ingrese ID del elemento a modificar: ");
-            int idElemento = int.Parse(Console.ReadLine());
-
-            var gastoEncontrado = gastos.FirstOrDefault(g => g.id == idElemento);
-
-            if (gastoEncontrado != null)
-            {
-                try
-                {
-                    Console.WriteLine("Escriba el nuevo monto.");
-                    gastoEncontrado.monto = int.Parse(Console.ReadLine());
-
-                    Console.WriteLine("Monto modificado correctamente.");
-                }
-                catch
-                {
-                    Console.WriteLine("Error al cambiar la monto.");
-                }
-
-                string archivoJson = JsonSerializer.Serialize(gastos, new JsonSerializerOptions { WriteIndented = true });
-                File.WriteAllText(archivo, archivoJson);
-            }
-            else
-            {
-                Console.WriteLine("No se encontró ese ID.");
-            }
-        }
-        else
-        {
-            Console.WriteLine("No se encuentra un archivo de gastos.");
+            Console.WriteLine("No se encontró ese ID.");
+            return;
         }
 
+        Console.WriteLine("Escriba el nuevo monto:");
+        gasto.monto = int.Parse(Console.ReadLine());
+
+        repo.GuardarGastos(gastos);
+        Console.WriteLine("Monto modificado correctamente.");
     }
-
 
     // Funcion para modificar el vencimiento
-    public void modificarVencimiento()
+    public void ModificarVencimiento()
     {
-        // Buscamos el archivo en la ruta
-        string rutaData = "C:\\Users\\Marcos\\source\\repos\\CRUD\\data";
-        string archivo = Path.Combine(rutaData, "gastos.json");
+        var gastos = repo.CargarGastos();
 
-        List<Gastos> gastos = new List<Gastos>();
+        Console.WriteLine("Ingrese ID del elemento a modificar: ");
+        int idElemento = int.Parse(Console.ReadLine());
 
-        // Verificamos que existe o lo creamos
-        if (File.Exists(archivo))
+        var gasto = gastos.FirstOrDefault(g => g.id == idElemento);
+
+        if (gasto == null)
         {
-            var opciones = new JsonSerializerOptions
-            {
-                PropertyNameCaseInsensitive = true
-            };
-            string json = File.ReadAllText(archivo);
-            gastos = JsonSerializer.Deserialize<List<Gastos>>(json, opciones) ?? new List<Gastos>();
-
-            Console.WriteLine("Ingrese ID del elemento a modificar: ");
-            int idElemento = int.Parse(Console.ReadLine());
-
-            var gastoEncontrado = gastos.FirstOrDefault(g => g.id == idElemento);
-
-            if (gastoEncontrado != null)
-            {
-                try
-                {
-                    Console.WriteLine("Escriba la nueva fecha de vencimiento (formato: dd/mm/aaaa): ");
-                    gastoEncontrado.vencimiento = DateTime.Parse(Console.ReadLine());
-
-                    Console.WriteLine("Vencimiento modificado correctamente.");
-                }
-                catch
-                {
-                    Console.WriteLine("Error al cambiar la fecha de vencimiento.");
-                }
-
-                string archivoJson = JsonSerializer.Serialize(gastos, new JsonSerializerOptions { WriteIndented = true });
-                File.WriteAllText(archivo, archivoJson);
-            }
-            else
-            {
-                Console.WriteLine("No se encontró ese ID.");
-            }
-        }
-        else
-        {
-            Console.WriteLine("No se encuentra un archivo de gastos.");
+            Console.WriteLine("No se encontró ese ID.");
+            return;
         }
 
+        Console.WriteLine("Escriba el nuevo vencimiento (dd/mm/aa):");
+        gasto.vencimiento = DateTime.Parse(Console.ReadLine());
+
+        repo.GuardarGastos(gastos);
+        Console.WriteLine("Vencimiento modificado correctamente.");
     }
-
 
     // Funcion para modificar el estado (Pagado)
-    public void modificarEstado()
+    public void ModificarEstado()
     {
-        // Buscamos el archivo en la ruta
-        string rutaData = "C:\\Users\\Marcos\\source\\repos\\CRUD\\data";
-        string archivo = Path.Combine(rutaData, "gastos.json");
+        var gastos = repo.CargarGastos();
 
-        List<Gastos> gastos = new List<Gastos>();
 
-        // Verificamos que existe o lo creamos
-        if (File.Exists(archivo))
+        Console.WriteLine("Ingrese ID del elemento a modificar: ");
+        int idElemento = int.Parse(Console.ReadLine());
+
+        var gasto = gastos.FirstOrDefault(g => g.id == idElemento);
+
+        if (gasto == null)
         {
-            var opciones = new JsonSerializerOptions
-            {
-                PropertyNameCaseInsensitive = true
-            };
-            string json = File.ReadAllText(archivo);
-            gastos = JsonSerializer.Deserialize<List<Gastos>>(json, opciones) ?? new List<Gastos>();
-
-            Console.WriteLine("Ingrese ID del elemento a modificar: ");
-            int idElemento = int.Parse(Console.ReadLine());
-
-            var gastoEncontrado = gastos.FirstOrDefault(g => g.id == idElemento);
-
-            if (gastoEncontrado != null)
-            {
-                gastoEncontrado.estado = true;
-
-                Console.WriteLine("Estado modificado correctamente");
-
-                string archivoJson = JsonSerializer.Serialize(gastos, new JsonSerializerOptions { WriteIndented = true });
-                File.WriteAllText(archivo, archivoJson);
-            }
-            else
-            {
-                Console.WriteLine("No se encontró ese ID.");
-            }
+            Console.WriteLine("No se encontró ese ID.");
+            return;
         }
-        else
-        {
-            Console.WriteLine("No se encuentra un archivo de gastos.");
-        }
+
+        gasto.estado = !gasto.estado;
+
+        repo.GuardarGastos(gastos);
+        Console.WriteLine("Estado modificado correctamente.");
+
+    }
+    
 
     }
 
-}
+

@@ -3,14 +3,14 @@
     "id": 1,
     "descripcion": "luz",
     "categoria": "cecsagal",
-    "monto": 42000,
+    "monto": 55520,
     "vencimiento": "2025-12-25T00:00:00",
     "estado": true
   },
   {
     "id": 2,
     "descripcion": "wifi",
-    "categoria": "ctnet",
+    "categoria": "ctc",
     "monto": 15000,
     "vencimiento": "2025-12-30T00:00:00",
     "estado": false
@@ -28,7 +28,7 @@
     "descripcion": "gym",
     "categoria": "ejercicio",
     "monto": 15000,
-    "vencimiento": "2025-12-01T00:00:00",
-    "estado": false
+    "vencimiento": "2025-12-16T00:00:00",
+    "estado": true
   }
 ]
